@@ -6,3 +6,8 @@ edition = "2021"
 [dependencies]
 ndarray = "0.16.1"
 num-traits = "0.2.19"
+
+[dev-dependencies]
+ndarray-rand = "0.15.0"
+rstest = "0.22.0"
+rstest_reuse = "0.7.0"

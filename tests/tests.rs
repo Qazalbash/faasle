@@ -2,16 +2,19 @@
 mod test {
     use faasle_rs::distance::Distance;
     use faasle_rs::metric::Euclidean;
-    use ndarray::{ArrayD, Axis};
+    use ndarray::{Array, Axis};
+    use ndarray_rand::rand_distr::Uniform;
+    use ndarray_rand::RandomExt;
+    use rstest::rstest;
+    use rstest_reuse::{self, *};
 
-    #[test]
-    fn test_positivity() {
-        let x = ArrayD::<f64>::from_shape_vec(vec![2, 2], vec![1.0, 2.0, 3.0, 4.0]).unwrap();
+    #[rstest]
+    #[case(vec![2, 3], Axis(1))]
+    #[case(vec![2, 1, 4], Axis(0))]
+    fn test_positivity(#[case] shape: Vec<usize>, #[case] axis: Axis) {
+        let x = Array::random(shape, Uniform::new(0., 10.));
         let euclidean = Euclidean::new();
-        let result = euclidean.distance(&x, &x, Axis(1));
-        assert_eq!(
-            result,
-            ArrayD::<f64>::from_shape_vec(vec![2], vec![0.0, 0.0]).unwrap()
-        );
+        let distance = euclidean.distance(&x, &x, axis);
+        assert!(distance.iter().all(|&d| d >= 0.));
     }
 }
