@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod test {
-    use faasle_rs::generic::Distance;
+    use faasle_rs::distance::Distance;
     use faasle_rs::metric::Euclidean;
     use ndarray::{ArrayD, Axis};
 
