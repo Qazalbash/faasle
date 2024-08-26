@@ -1,0 +1,49 @@
+files: src||tests
+repos:
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.41.0
+    hooks:
+      - id: markdownlint
+        # MD013: line length
+        # MD033: no inline HTML
+        # MD041: first line in a file should be a top-level heading
+        args: [--disable, MD013, MD033, MD041, "--"]
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.3.0
+    hooks:
+      - id: codespell
+        stages: [commit, commit-msg]
+        args:
+          [
+            --ignore-words-list,
+            precessing,
+            --ignore-words-list,
+            multline,
+            --check-filenames,
+          ]
+  - repo: local
+    hooks:
+      - id: no-bracket-links
+        name: "Brackets should not be inside links [[link]](url) -> [[link](url)]"
+        entry: '\]\]\('
+        language: pygrep
+        types: [markdown]
+
+      - id: no-http
+        name: URLs must use HTTPS
+        entry: "http:"
+        language: pygrep
+        types_or: [markdown, yaml]
+        exclude: .pre-commit-config.yaml
+
+      - id: no-repeated-whitespace
+        name: No repeated spaces
+        entry: '\S+\s{2,}'
+        language: pygrep
+        types: [text]
+        exclude: LICENSE
+        exclude_types: [python, bib, gitignore, jupyter, makefile, rst, yaml]
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.18.4
+    hooks:
+      - id: gitleaks
