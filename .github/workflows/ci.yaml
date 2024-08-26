@@ -3,8 +3,18 @@ name: CI
 on:
   push:
     branches: [ main ]
+    paths:
+      - "**/*.rs"
+      - ".github/workflows/ci.yml"
+      - "Cargo.toml"
+      - "rustfmt.toml"
   pull_request:
     branches: [ main ]
+    paths:
+      - "**/*.rs"
+      - ".github/workflows/ci.yml"
+      - "Cargo.toml"
+      - "rustfmt.toml"
 
 env:
   CARGO_INCREMENTAL: 0
