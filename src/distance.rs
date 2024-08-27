@@ -1,4 +1,4 @@
-use crate::metric::{Cityblock, Euclidean, Minkowski, SqEuclidean, TotalVariation};
+use crate::metric::{Chebyshev, Cityblock, Euclidean, Minkowski, SqEuclidean, TotalVariation};
 use ndarray::{ArrayD, Axis};
 pub trait Distance<T>
 where
@@ -47,5 +47,13 @@ impl<T: num_traits::Float> Distance<T> for Minkowski {
         let square = diff.mapv(|a| a.abs().powf(T::from(self.p).unwrap()));
         let sum = square.sum_axis(axis);
         sum.mapv(|a| a.powf(T::from(1.0 / self.p).unwrap()))
+    }
+}
+
+impl<T: num_traits::Float> Distance<T> for Chebyshev {
+    fn distance(&self, x: &ArrayD<T>, y: &ArrayD<T>, axis: Axis) -> ArrayD<T> {
+        let diff = x - y;
+        let abs_diff = diff.mapv(|a| a.abs());
+        abs_diff.fold_axis(axis, T::zero(), |a, b| a.max(*b))
     }
 }
