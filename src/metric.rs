@@ -56,7 +56,9 @@ pub struct MeanAbsDeviation;
 pub struct MeanSqDeviation;
 
 #[derive(Debug, Clone, Copy)]
-pub struct Minkowski;
+pub struct Minkowski {
+    pub p: f64,
+}
 
 #[derive(Debug, Clone, Copy)]
 pub struct NormRMSDeviation;
@@ -132,14 +134,53 @@ pub enum Metric {
     TotalVariation(TotalVariation),
 }
 
-impl Euclidean {
-    pub fn new() -> Self {
-        Self {}
+macro_rules! impl_metric {
+    ($($metric:ident,)*) => {
+        $(
+            impl $metric {
+                pub fn new() -> Self {
+                    Self {}
+                }
+            }
+
+            impl Default for $metric {
+                fn default() -> Self {
+                    Self::new()
+                }
+            }
+        )*
+    };
+}
+
+impl_metric! {
+    BrayCurtis,
+    Chebyshev,
+    ChiSqDist,
+    Cityblock,
+    CosineDist,
+    Euclidean,
+    GenKLDivergence,
+    Hamming,
+    Jaccard,
+    JSDivergence,
+    KLDivergence,
+    MeanAbsDeviation,
+    MeanSqDeviation,
+    NormRMSDeviation,
+    RMSDeviation,
+    SpanNormDist,
+    SqEuclidean,
+    TotalVariation,
+}
+
+impl Minkowski {
+    pub fn new(p: f64) -> Self {
+        Self { p }
     }
 }
 
-impl Default for Euclidean {
+impl Default for Minkowski {
     fn default() -> Self {
-        Self::new()
+        Self::new(1.0)
     }
 }
