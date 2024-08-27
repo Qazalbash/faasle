@@ -1,5 +1,5 @@
 use crate::metric::{
-    Chebyshev, Cityblock, Euclidean, Hamming, Minkowski, SqEuclidean, TotalVariation,
+    BrayCurtis, Chebyshev, Cityblock, Euclidean, Hamming, Minkowski, SqEuclidean, TotalVariation,
 };
 use ndarray::{ArrayD, Axis};
 pub trait Distance<T>
@@ -82,5 +82,17 @@ impl<T: num_traits::Float> Distance<T> for Hamming {
             }
         });
         x_neq_y.sum_axis(axis)
+    }
+}
+
+impl<T: num_traits::Float> Distance<T> for BrayCurtis {
+    unsafe fn distance(&self, x: &ArrayD<T>, y: &ArrayD<T>, axis: Axis) -> ArrayD<T> {
+        let diff = x - y;
+        let sum = x + y;
+        let abs_diff = diff.mapv(|a| a.abs());
+        let abs_sum = sum.mapv(|a| a.abs());
+        let sum_abs_diff = abs_diff.sum_axis(axis);
+        let sum_abs_sum = abs_sum.sum_axis(axis);
+        sum_abs_diff / sum_abs_sum
     }
 }
