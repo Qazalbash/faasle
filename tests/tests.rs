@@ -61,3 +61,21 @@ enumerate_tests! {
     metric: (total_variation, TotalVariation::new()),
     semi_metric: (sq_euclidean, SqEuclidean::new()),
 }
+
+#[test]
+fn unequal_shape() {
+    let x = Array::random(vec![10, 8, 6, 4, 2], Uniform::new(0.0, 1.0));
+    let y = Array::random(vec![10, 8, 6, 4, 3], Uniform::new(0.0, 1.0));
+    let metric = Euclidean::new();
+    let error = metric.evaluate(&x, &y, Axis(2)).unwrap_err();
+    assert_eq!(error, "x and y must have the same shape");
+}
+
+#[test]
+fn unequal_dimension() {
+    let x = Array::random(vec![10, 8, 6, 4, 2], Uniform::new(0.0, 1.0));
+    let y = Array::random(vec![10, 8, 6, 4], Uniform::new(0.0, 1.0));
+    let metric = Euclidean::new();
+    let error = metric.evaluate(&x, &y, Axis(2)).unwrap_err();
+    assert_eq!(error, "x and y must have the same number of dimensions");
+}
