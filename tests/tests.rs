@@ -1,6 +1,8 @@
 mod common;
 use faasle_rs::distance::Distance;
-use faasle_rs::metric::{Chebyshev, Cityblock, Euclidean, Minkowski, SqEuclidean, TotalVariation};
+use faasle_rs::metric::{
+    Chebyshev, Cityblock, Euclidean, Hamming, Minkowski, SqEuclidean, TotalVariation,
+};
 use ndarray::{Array, Axis};
 use ndarray_rand::rand_distr::Uniform;
 use ndarray_rand::RandomExt;
@@ -47,14 +49,15 @@ macro_rules! enumerate_tests {
 }
 
 enumerate_tests! {
+    metric: (chebyshev, Chebyshev::new()),
     metric: (cityblock, Cityblock::new()),
     metric: (euclidean, Euclidean::new()),
+    metric: (hamming, Hamming::new()),
     metric: (minkowski_1, Minkowski::new(1.0)),
-    metric: (minkowski_3, Minkowski::new(3.0)),
     metric: (minkowski_10, Minkowski::new(10.0)),
+    metric: (minkowski_3, Minkowski::new(3.0)),
     metric: (minkowski_e, Minkowski::new(std::f64::consts::E)),
     metric: (minkowski_pi, Minkowski::new(std::f64::consts::PI)),
     metric: (total_variation, TotalVariation::new()),
     semi_metric: (sq_euclidean, SqEuclidean::new()),
-    metric: (chebyshev, Chebyshev::new()),
 }

@@ -1,4 +1,6 @@
-use crate::metric::{Chebyshev, Cityblock, Euclidean, Minkowski, SqEuclidean, TotalVariation};
+use crate::metric::{
+    Chebyshev, Cityblock, Euclidean, Hamming, Minkowski, SqEuclidean, TotalVariation,
+};
 use ndarray::{ArrayD, Axis};
 pub trait Distance<T>
 where
@@ -55,5 +57,20 @@ impl<T: num_traits::Float> Distance<T> for Chebyshev {
         let diff = x - y;
         let abs_diff = diff.mapv(|a| a.abs());
         abs_diff.fold_axis(axis, T::zero(), |a, b| a.max(*b))
+    }
+}
+
+impl<T: num_traits::Float> Distance<T> for Hamming {
+    fn distance(&self, x: &ArrayD<T>, y: &ArrayD<T>, axis: Axis) -> ArrayD<T> {
+        let x_neq_y = ArrayD::from_shape_fn(x.raw_dim(), |idx| {
+            let idx_copy = idx.clone();
+            let x_idx = x.get(idx).unwrap();
+            let y_idx = y.get(idx_copy).unwrap();
+            match x_idx != y_idx {
+                true => T::one(),
+                false => T::zero(),
+            }
+        });
+        x_neq_y.sum_axis(axis)
     }
 }
