@@ -6,6 +6,25 @@ use faasle_rs::metric::{
 use ndarray::{Array, Axis};
 use ndarray_rand::rand_distr::Uniform;
 use ndarray_rand::RandomExt;
+const ERR_MARGIN: f64 = 1e-6;
+
+#[test]
+fn unequal_shape() {
+    let x = Array::random(vec![10, 8, 6, 4, 2], Uniform::new(0.0, 1.0));
+    let y = Array::random(vec![10, 8, 6, 4, 3], Uniform::new(0.0, 1.0));
+    let metric = Euclidean::new();
+    let error = metric.evaluate(&x, &y, Axis(2)).unwrap_err();
+    assert_eq!(error, "x and y must have the same shape");
+}
+
+#[test]
+fn unequal_dimension() {
+    let x = Array::random(vec![10, 8, 6, 4, 2], Uniform::new(0.0, 1.0));
+    let y = Array::random(vec![10, 8, 6, 4], Uniform::new(0.0, 1.0));
+    let metric = Euclidean::new();
+    let error = metric.evaluate(&x, &y, Axis(2)).unwrap_err();
+    assert_eq!(error, "x and y must have the same number of dimensions");
+}
 
 macro_rules! enumerate_tests {
     ($($metric_type:ident: ($name:ident, $metric:expr), )*) => {
@@ -60,23 +79,6 @@ enumerate_tests! {
     metric: (minkowski_pi, Minkowski::new(std::f64::consts::PI)),
     metric: (total_variation, TotalVariation::new()),
     semi_metric: (bray_curtis, BrayCurtis::new()),
+    // semi_metric: (chi_sq_dist, ChiSqDist::new()), // This test is disabled because it is numerically unstable.
     semi_metric: (sq_euclidean, SqEuclidean::new()),
-}
-
-#[test]
-fn unequal_shape() {
-    let x = Array::random(vec![10, 8, 6, 4, 2], Uniform::new(0.0, 1.0));
-    let y = Array::random(vec![10, 8, 6, 4, 3], Uniform::new(0.0, 1.0));
-    let metric = Euclidean::new();
-    let error = metric.evaluate(&x, &y, Axis(2)).unwrap_err();
-    assert_eq!(error, "x and y must have the same shape");
-}
-
-#[test]
-fn unequal_dimension() {
-    let x = Array::random(vec![10, 8, 6, 4, 2], Uniform::new(0.0, 1.0));
-    let y = Array::random(vec![10, 8, 6, 4], Uniform::new(0.0, 1.0));
-    let metric = Euclidean::new();
-    let error = metric.evaluate(&x, &y, Axis(2)).unwrap_err();
-    assert_eq!(error, "x and y must have the same number of dimensions");
 }

@@ -1,59 +1,17 @@
 #[derive(Debug, Clone, Copy)]
-pub struct BhattacharyyaDist;
-
-#[derive(Debug, Clone, Copy)]
 pub struct BrayCurtis;
-
-#[derive(Debug, Clone, Copy)]
-pub struct Bregman;
 
 #[derive(Debug, Clone, Copy)]
 pub struct Chebyshev;
 
 #[derive(Debug, Clone, Copy)]
-pub struct ChiSqDist;
-
-#[derive(Debug, Clone, Copy)]
 pub struct Cityblock;
-
-#[derive(Debug, Clone, Copy)]
-pub struct CorrDist;
-
-#[derive(Debug, Clone, Copy)]
-pub struct CosineDist;
 
 #[derive(Debug, Clone, Copy)]
 pub struct Euclidean;
 
 #[derive(Debug, Clone, Copy)]
-pub struct GenKLDivergence;
-
-#[derive(Debug, Clone, Copy)]
 pub struct Hamming;
-
-#[derive(Debug, Clone, Copy)]
-pub struct Haversine;
-
-#[derive(Debug, Clone, Copy)]
-pub struct HellingerDist;
-
-#[derive(Debug, Clone, Copy)]
-pub struct Jaccard;
-
-#[derive(Debug, Clone, Copy)]
-pub struct JSDivergence;
-
-#[derive(Debug, Clone, Copy)]
-pub struct KLDivergence;
-
-#[derive(Debug, Clone, Copy)]
-pub struct Mahalanobis;
-
-#[derive(Debug, Clone, Copy)]
-pub struct MeanAbsDeviation;
-
-#[derive(Debug, Clone, Copy)]
-pub struct MeanSqDeviation;
 
 #[derive(Debug, Clone, Copy)]
 pub struct Minkowski {
@@ -61,78 +19,117 @@ pub struct Minkowski {
 }
 
 #[derive(Debug, Clone, Copy)]
-pub struct NormRMSDeviation;
-
-#[derive(Debug, Clone, Copy)]
-pub struct PeriodicEuclidean;
-
-#[derive(Debug, Clone, Copy)]
-pub struct RenyiDivergence;
-
-#[derive(Debug, Clone, Copy)]
-pub struct RMSDeviation;
-
-#[derive(Debug, Clone, Copy)]
-pub struct RogersTanimoto;
-
-#[derive(Debug, Clone, Copy)]
-pub struct SpanNormDist;
-
-#[derive(Debug, Clone, Copy)]
-pub struct SphericalAngle;
-
-#[derive(Debug, Clone, Copy)]
 pub struct SqEuclidean;
-
-#[derive(Debug, Clone, Copy)]
-pub struct SqMahalanobis;
 
 #[derive(Debug, Clone, Copy)]
 pub struct TotalVariation;
 
 #[derive(Debug, Clone, Copy)]
-pub struct WeightedCityblock;
+pub(crate) struct ChiSqDist;
 
+#[allow(unused)]
 #[derive(Debug, Clone, Copy)]
-pub struct WeightedEuclidean;
+struct BhattacharyyaDist;
 
+#[allow(unused)]
 #[derive(Debug, Clone, Copy)]
-pub struct WeightedHamming;
+struct Bregman;
 
+#[allow(unused)]
 #[derive(Debug, Clone, Copy)]
-pub struct WeightedMinkowski;
+struct CorrDist;
 
+#[allow(unused)]
 #[derive(Debug, Clone, Copy)]
-pub struct WeightedSqEuclidean;
+struct CosineDist;
 
-pub enum PreMetric {
-    GenKLDivergence(GenKLDivergence),
-    KLDivergence(KLDivergence),
-    NormRMSDeviation(NormRMSDeviation),
-}
+#[allow(unused)]
+#[derive(Debug, Clone, Copy)]
+struct GenKLDivergence;
 
-pub enum SemiMetric {
-    BrayCurtis(BrayCurtis),
-    ChiSqDist(ChiSqDist),
-    CosineDist(CosineDist),
-    JSDivergence(JSDivergence),
-    MeanSqDeviation(MeanSqDeviation),
-    SpanNormDist(SpanNormDist),
-    SqEuclidean(SqEuclidean),
-    WeightedSqEuclidean(WeightedSqEuclidean),
-}
+#[allow(unused)]
+#[derive(Debug, Clone, Copy)]
+struct Haversine;
 
-pub enum Metric {
-    Chebyshev(Chebyshev),
-    Cityblock(Cityblock),
-    Euclidean(Euclidean),
-    Hamming(Hamming),
-    Jaccard(Jaccard),
-    MeanAbsDeviation(MeanAbsDeviation),
-    Minkowski(Minkowski),
-    RMSDeviation(RMSDeviation),
-    TotalVariation(TotalVariation),
-}
+#[allow(unused)]
+#[derive(Debug, Clone, Copy)]
+struct HellingerDist;
+
+#[allow(unused)]
+#[derive(Debug, Clone, Copy)]
+struct Jaccard;
+
+#[allow(unused)]
+#[derive(Debug, Clone, Copy)]
+struct JSDivergence;
+
+#[allow(unused)]
+#[derive(Debug, Clone, Copy)]
+struct KLDivergence;
+
+#[allow(unused)]
+#[derive(Debug, Clone, Copy)]
+struct Mahalanobis;
+
+#[allow(unused)]
+#[derive(Debug, Clone, Copy)]
+struct MeanAbsDeviation;
+
+#[allow(unused)]
+#[derive(Debug, Clone, Copy)]
+struct MeanSqDeviation;
+
+#[allow(unused)]
+#[derive(Debug, Clone, Copy)]
+struct NormRMSDeviation;
+
+#[allow(unused)]
+#[derive(Debug, Clone, Copy)]
+struct PeriodicEuclidean;
+
+#[allow(unused)]
+#[derive(Debug, Clone, Copy)]
+struct RenyiDivergence;
+
+#[allow(unused)]
+#[derive(Debug, Clone, Copy)]
+struct RMSDeviation;
+
+#[allow(unused)]
+#[derive(Debug, Clone, Copy)]
+struct RogersTanimoto;
+
+#[allow(unused)]
+#[derive(Debug, Clone, Copy)]
+struct SpanNormDist;
+
+#[allow(unused)]
+#[derive(Debug, Clone, Copy)]
+struct SphericalAngle;
+
+#[allow(unused)]
+#[derive(Debug, Clone, Copy)]
+struct SqMahalanobis;
+
+#[allow(unused)]
+#[derive(Debug, Clone, Copy)]
+struct WeightedCityblock;
+
+#[allow(unused)]
+#[derive(Debug, Clone, Copy)]
+struct WeightedEuclidean;
+
+#[allow(unused)]
+#[derive(Debug, Clone, Copy)]
+struct WeightedHamming;
+
+#[allow(unused)]
+#[derive(Debug, Clone, Copy)]
+struct WeightedMinkowski;
+
+#[allow(unused)]
+#[derive(Debug, Clone, Copy)]
+struct WeightedSqEuclidean;
 
 macro_rules! impl_metric {
     ($($metric:ident,)*) => {

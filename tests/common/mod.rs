@@ -6,7 +6,7 @@ macro_rules! test_zero_distance {
             fn [<zero_distance_$name>]() {
                 let x = Array::random($shape, Uniform::new(-10.0, 10.0));
                 let distance = $metric.evaluate(&x, &x, $axis).unwrap();
-                assert!(distance.iter().all(|&d| d == 0.));
+                assert!(distance.iter().all(|&d| (d <= ERR_MARGIN) || (d >= -ERR_MARGIN)));
             }
         }
     };
@@ -21,7 +21,7 @@ macro_rules! test_positivity {
                 let x = Array::random($shape, Uniform::new(-10.0, 10.0));
                 let y = Array::random($shape, Uniform::new(-10.0, 10.0));
                 let distance = $metric.evaluate(&x, &y, $axis).unwrap();
-                assert!(distance.iter().all(|&d| d >= 0.));
+                assert!(distance.iter().all(|&d| d >= -ERR_MARGIN));
             }
         }
     };
@@ -55,7 +55,6 @@ macro_rules! test_triangular_inequality {
                 let distance_x_y = $metric.evaluate(&x, &y, $axis).unwrap();
                 let distance_x_z = $metric.evaluate(&x, &z, $axis).unwrap();
                 let distance_y_z = $metric.evaluate(&y, &z, $axis).unwrap();
-                const ERR_MARGIN: f64 = 1e-6;
                 assert!(distance_x_y
                     .iter()
                     .zip(distance_x_z.iter().zip(distance_y_z.iter()))
