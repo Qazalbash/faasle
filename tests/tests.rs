@@ -1,6 +1,6 @@
 mod common;
 use faasle_rs::distance::Distance;
-use faasle_rs::metric::{Cityblock, Euclidean, SqEuclidean};
+use faasle_rs::metric::{Cityblock, Euclidean, SqEuclidean, TotalVariation};
 use ndarray::{Array, Axis};
 use ndarray_rand::rand_distr::Uniform;
 use ndarray_rand::RandomExt;
@@ -49,5 +49,6 @@ macro_rules! enumerate_tests {
 enumerate_tests! {
     metric: (cityblock, Cityblock::new()),
     metric: (euclidean, Euclidean::new()),
+    metric: (total_variation, TotalVariation::new()),
     semi_metric: (sq_euclidean, SqEuclidean::new()),
 }
