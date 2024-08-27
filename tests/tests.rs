@@ -51,8 +51,9 @@ enumerate_tests! {
     metric: (euclidean, Euclidean::new()),
     metric: (minkowski_1, Minkowski::new(1.0)),
     metric: (minkowski_3, Minkowski::new(3.0)),
-    metric: (minkowski_e, Minkowski::new(2.73)),
-    metric: (minkowski_pi, Minkowski::new(3.142)),
+    metric: (minkowski_10, Minkowski::new(10.0)),
+    metric: (minkowski_e, Minkowski::new(std::f64::consts::E)),
+    metric: (minkowski_pi, Minkowski::new(std::f64::consts::PI)),
     metric: (total_variation, TotalVariation::new()),
     semi_metric: (sq_euclidean, SqEuclidean::new()),
 }
