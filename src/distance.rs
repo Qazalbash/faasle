@@ -6,6 +6,7 @@ pub trait Distance<T>
 where
     T: num_traits::Float,
 {
+    /// # Safety
     unsafe fn distance(&self, x: &ArrayD<T>, y: &ArrayD<T>, axis: Axis) -> ArrayD<T>;
     fn evaluate(&self, x: &ArrayD<T>, y: &ArrayD<T>, axis: Axis) -> Result<ArrayD<T>, String> {
         if x.ndim() != y.ndim() {
