@@ -25,5 +25,9 @@ reorder_impl_items = true
 # report_todo = "Unnumbered"
 # report_fixme = "Unnumbered"
 
+# Macros
+format_macro_matchers = true
+format_macro_bodies = true
+
 # Ignored files:
 ignore = []
