@@ -5,7 +5,7 @@ macro_rules! test_zero_distance {
             #[test]
             fn [<zero_distance_$name>]() {
                 let x = Array::random($shape, Uniform::new(-10.0, 10.0));
-                let distance = $metric.distance(&x, &x, $axis);
+                let distance = $metric.evaluate(&x, &x, $axis).unwrap();
                 assert!(distance.iter().all(|&d| d == 0.));
             }
         }
@@ -20,7 +20,7 @@ macro_rules! test_positivity {
             fn [<positivity_$name>]() {
                 let x = Array::random($shape, Uniform::new(-10.0, 10.0));
                 let y = Array::random($shape, Uniform::new(-10.0, 10.0));
-                let distance = $metric.distance(&x, &y, $axis);
+                let distance = $metric.evaluate(&x, &y, $axis).unwrap();
                 assert!(distance.iter().all(|&d| d >= 0.));
             }
         }
@@ -35,8 +35,8 @@ macro_rules! test_symmetry {
             fn [<symmetry_$name>]() {
                 let x = Array::random($shape, Uniform::new(-10.0, 10.0));
                 let y = Array::random($shape, Uniform::new(-10.0, 10.0));
-                let distance_x_y = $metric.distance(&x, &y, $axis);
-                let distance_y_x = $metric.distance(&y, &x, $axis);
+                let distance_x_y = $metric.evaluate(&x, &y, $axis).unwrap();
+                let distance_y_x = $metric.evaluate(&y, &x, $axis).unwrap();
                 assert_eq!(distance_x_y, distance_y_x);
             }
         }
@@ -52,9 +52,9 @@ macro_rules! test_triangular_inequality {
                 let x = Array::random($shape, Uniform::new(-10.0, 10.0));
                 let y = Array::random($shape, Uniform::new(-10.0, 10.0));
                 let z = Array::random($shape, Uniform::new(-10.0, 10.0));
-                let distance_x_y = $metric.distance(&x, &y, $axis);
-                let distance_x_z = $metric.distance(&x, &z, $axis);
-                let distance_y_z = $metric.distance(&y, &z, $axis);
+                let distance_x_y = $metric.evaluate(&x, &y, $axis).unwrap();
+                let distance_x_z = $metric.evaluate(&x, &z, $axis).unwrap();
+                let distance_y_z = $metric.evaluate(&y, &z, $axis).unwrap();
                 const ERR_MARGIN: f64 = 1e-6;
                 assert!(distance_x_y
                     .iter()
