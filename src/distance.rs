@@ -1,6 +1,6 @@
 use crate::metric::{
-    BrayCurtis, Chebyshev, ChiSqDist, Cityblock, Euclidean, Hamming, Minkowski, SqEuclidean,
-    TotalVariation,
+    BrayCurtis, Chebyshev, ChiSqDist, Cityblock, Euclidean, Hamming, KLDivergence, Minkowski,
+    SqEuclidean, TotalVariation,
 };
 use ndarray::{ArrayD, Axis};
 pub trait Distance<T>
@@ -20,53 +20,53 @@ where
     }
 }
 
-impl<T: num_traits::Float> Distance<T> for Euclidean {
+impl<T: 'static + num_traits::Float> Distance<T> for Euclidean {
     unsafe fn distance(&self, x: &ArrayD<T>, y: &ArrayD<T>, axis: Axis) -> ArrayD<T> {
         let diff = x - y;
-        let square = diff.mapv(|a| a * a);
+        let square = diff.pow2();
         let sum = square.sum_axis(axis);
-        sum.mapv(|a| a.sqrt())
+        sum.sqrt()
     }
 }
 
-impl<T: num_traits::Float> Distance<T> for SqEuclidean {
+impl<T: 'static + num_traits::Float> Distance<T> for SqEuclidean {
     unsafe fn distance(&self, x: &ArrayD<T>, y: &ArrayD<T>, axis: Axis) -> ArrayD<T> {
         let diff = x - y;
-        let square = diff.mapv(|a| a * a);
+        let square = diff.pow2();
         square.sum_axis(axis)
     }
 }
 
-impl<T: num_traits::Float> Distance<T> for Cityblock {
+impl<T: 'static + num_traits::Float> Distance<T> for Cityblock {
     unsafe fn distance(&self, x: &ArrayD<T>, y: &ArrayD<T>, axis: Axis) -> ArrayD<T> {
         let diff = x - y;
-        let abs_diff = diff.mapv(|a| a.abs());
+        let abs_diff = diff.abs();
         abs_diff.sum_axis(axis)
     }
 }
 
-impl<T: num_traits::Float> Distance<T> for TotalVariation {
+impl<T: 'static + num_traits::Float + ndarray::ScalarOperand> Distance<T> for TotalVariation {
     unsafe fn distance(&self, x: &ArrayD<T>, y: &ArrayD<T>, axis: Axis) -> ArrayD<T> {
         let diff = x - y;
-        let abs_diff = diff.mapv(|a| a.abs());
+        let abs_diff = diff.abs();
         let sum = abs_diff.sum_axis(axis);
-        sum.mapv(|a| a * T::from(0.5).unwrap())
+        sum * T::from(0.5).unwrap()
     }
 }
 
-impl<T: num_traits::Float> Distance<T> for Minkowski {
+impl<T: 'static + num_traits::Float> Distance<T> for Minkowski {
     unsafe fn distance(&self, x: &ArrayD<T>, y: &ArrayD<T>, axis: Axis) -> ArrayD<T> {
         let diff = x - y;
-        let square = diff.mapv(|a| a.abs().powf(T::from(self.p).unwrap()));
+        let square = diff.abs().powf(T::from(self.p).unwrap());
         let sum = square.sum_axis(axis);
-        sum.mapv(|a| a.powf(T::from(1.0 / self.p).unwrap()))
+        sum.powf(T::from(1.0 / self.p).unwrap())
     }
 }
 
-impl<T: num_traits::Float> Distance<T> for Chebyshev {
+impl<T: 'static + num_traits::Float> Distance<T> for Chebyshev {
     unsafe fn distance(&self, x: &ArrayD<T>, y: &ArrayD<T>, axis: Axis) -> ArrayD<T> {
         let diff = x - y;
-        let abs_diff = diff.mapv(|a| a.abs());
+        let abs_diff = diff.abs();
         abs_diff.fold_axis(axis, T::zero(), |a, b| a.max(*b))
     }
 }
@@ -86,19 +86,19 @@ impl<T: num_traits::Float> Distance<T> for Hamming {
     }
 }
 
-impl<T: num_traits::Float> Distance<T> for BrayCurtis {
+impl<T: 'static + num_traits::Float> Distance<T> for BrayCurtis {
     unsafe fn distance(&self, x: &ArrayD<T>, y: &ArrayD<T>, axis: Axis) -> ArrayD<T> {
         let diff = x - y;
         let sum = x + y;
-        let abs_diff = diff.mapv(|a| a.abs());
-        let abs_sum = sum.mapv(|a| a.abs());
+        let abs_diff = diff.abs();
+        let abs_sum = sum.abs();
         let sum_abs_diff = abs_diff.sum_axis(axis);
         let sum_abs_sum = abs_sum.sum_axis(axis);
         sum_abs_diff / sum_abs_sum
     }
 }
 
-impl<T: num_traits::Float + 'static> Distance<T> for ChiSqDist {
+impl<T: 'static + num_traits::Float> Distance<T> for ChiSqDist {
     unsafe fn distance(&self, _x: &ArrayD<T>, _y: &ArrayD<T>, _axis: Axis) -> ArrayD<T> {
         panic!("Numerical stability issues regarding the positivity test.");
         // let diff = x - y;
@@ -106,5 +106,14 @@ impl<T: num_traits::Float + 'static> Distance<T> for ChiSqDist {
         // let sum = x + y;
         // let sum_diff_sq = diff_sq / sum;
         // sum_diff_sq.sum_axis(axis)
+    }
+}
+
+impl<T: 'static + num_traits::Float> Distance<T> for KLDivergence {
+    unsafe fn distance(&self, x: &ArrayD<T>, y: &ArrayD<T>, axis: Axis) -> ArrayD<T> {
+        let log_x = x.ln();
+        let log_y = y.ln();
+        let parital_kld = x * (log_x - log_y);
+        parital_kld.sum_axis(axis)
     }
 }

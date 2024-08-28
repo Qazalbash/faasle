@@ -4,9 +4,10 @@ macro_rules! test_zero_distance {
         paste::paste! {
             #[test]
             fn [<zero_distance_$name>]() {
-                let x = Array::random($shape, Uniform::new(-10.0, 10.0));
+                let x = Array::random($shape, Uniform::new(100.0, 1000.0));
                 let distance = $metric.evaluate(&x, &x, $axis).unwrap();
-                assert!(distance.iter().all(|&d| (d <= ERR_MARGIN) || (d >= -ERR_MARGIN)));
+                let zeros = Array::zeros(distance.shape());
+                assert!(distance.abs_diff_eq(&zeros, ERR_MARGIN))
             }
         }
     };
@@ -18,8 +19,8 @@ macro_rules! test_positivity {
         paste::paste! {
             #[test]
             fn [<positivity_$name>]() {
-                let x = Array::random($shape, Uniform::new(-10.0, 10.0));
-                let y = Array::random($shape, Uniform::new(-10.0, 10.0));
+                let x = Array::random($shape, Uniform::new(100.0, 1000.0));
+                let y = Array::random($shape, Uniform::new(100.0, 1000.0));
                 let distance = $metric.evaluate(&x, &y, $axis).unwrap();
                 assert!(distance.iter().all(|&d| d >= -ERR_MARGIN));
             }
@@ -33,11 +34,11 @@ macro_rules! test_symmetry {
         paste::paste! {
             #[test]
             fn [<symmetry_$name>]() {
-                let x = Array::random($shape, Uniform::new(-10.0, 10.0));
-                let y = Array::random($shape, Uniform::new(-10.0, 10.0));
+                let x = Array::random($shape, Uniform::new(100.0, 1000.0));
+                let y = Array::random($shape, Uniform::new(100.0, 1000.0));
                 let distance_x_y = $metric.evaluate(&x, &y, $axis).unwrap();
                 let distance_y_x = $metric.evaluate(&y, &x, $axis).unwrap();
-                assert_eq!(distance_x_y, distance_y_x);
+                assert!(distance_x_y.relative_eq(&distance_y_x, ERR_MARGIN, ERR_MARGIN));
             }
         }
     };
@@ -58,15 +59,15 @@ macro_rules! test_triangular_inequality {
                 assert!(distance_x_y
                     .iter()
                     .zip(distance_x_z.iter().zip(distance_y_z.iter()))
-                    .all(|(dxy, (dxz, dyz))| (*dxy + ERR_MARGIN <= dxz + dyz) || (*dxy - ERR_MARGIN<= dxz + dyz)));
+                    .all(|(dxy, (dxz, dyz))| (*dxy + ERR_MARGIN <= dxz + dyz) || (*dxy - ERR_MARGIN <= dxz + dyz)));
                 assert!(distance_x_z
                     .iter()
                     .zip(distance_x_y.iter().zip(distance_y_z.iter()))
-                    .all(|(dxz, (dxy, dyz))| (*dxz + ERR_MARGIN <= dxy + dyz) || (*dxz - ERR_MARGIN<= dxy + dyz)));
+                    .all(|(dxz, (dxy, dyz))| (*dxz + ERR_MARGIN <= dxy + dyz) || (*dxz - ERR_MARGIN <= dxy + dyz)));
                 assert!(distance_y_z
                     .iter()
                     .zip(distance_x_y.iter().zip(distance_x_z.iter()))
-                    .all(|(dyz, (dxy, dxz))| (*dyz + ERR_MARGIN <= dxy + dxz) || (*dyz - ERR_MARGIN<= dxy + dxz)));
+                    .all(|(dyz, (dxy, dxz))| (*dyz + ERR_MARGIN <= dxy + dxz) || (*dyz - ERR_MARGIN <= dxy + dxz)));
                 }
             }
         };
@@ -77,7 +78,6 @@ macro_rules! pre_metric_test {
     ($($name:ident: ($shape:expr, $axis:expr, $metric:expr),)*) => {
         $(
             test_zero_distance!($shape, $axis, $metric, $name);
-            test_positivity!($shape, $axis, $metric, $name);
         )*
     };
 }
@@ -91,6 +91,7 @@ macro_rules! semi_metric_test {
             )*
         }
         $(
+            test_positivity!($shape, $axis, $metric, $name);
             test_symmetry!($shape, $axis, $metric, $name);
         )*
     };

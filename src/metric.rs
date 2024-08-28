@@ -14,6 +14,9 @@ pub struct Euclidean;
 pub struct Hamming;
 
 #[derive(Debug, Clone, Copy)]
+pub struct KLDivergence;
+
+#[derive(Debug, Clone, Copy)]
 pub struct Minkowski {
     pub p: f64,
 }
@@ -62,10 +65,6 @@ struct Jaccard;
 #[allow(unused)]
 #[derive(Debug, Clone, Copy)]
 struct JSDivergence;
-
-#[allow(unused)]
-#[derive(Debug, Clone, Copy)]
-struct KLDivergence;
 
 #[allow(unused)]
 #[derive(Debug, Clone, Copy)]
