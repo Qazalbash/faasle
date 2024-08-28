@@ -99,13 +99,11 @@ impl<T: 'static + num_traits::Float> Distance<T> for BrayCurtis {
 }
 
 impl<T: 'static + num_traits::Float> Distance<T> for ChiSqDist {
-    unsafe fn distance(&self, _x: &ArrayD<T>, _y: &ArrayD<T>, _axis: Axis) -> ArrayD<T> {
-        panic!("Numerical stability issues regarding the positivity test.");
-        // let diff = x - y;
-        // let diff_sq = diff.mapv(|a| a * a);
-        // let sum = x + y;
-        // let sum_diff_sq = diff_sq / sum;
-        // sum_diff_sq.sum_axis(axis)
+    unsafe fn distance(&self, x: &ArrayD<T>, y: &ArrayD<T>, axis: Axis) -> ArrayD<T> {
+        let diff_sq = (x - y).pow2();
+        let sum = x + y;
+        let sum_diff_sq = diff_sq / sum;
+        sum_diff_sq.sum_axis(axis)
     }
 }
 

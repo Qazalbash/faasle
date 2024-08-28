@@ -5,6 +5,9 @@ pub struct BrayCurtis;
 pub struct Chebyshev;
 
 #[derive(Debug, Clone, Copy)]
+pub struct ChiSqDist;
+
+#[derive(Debug, Clone, Copy)]
 pub struct Cityblock;
 
 #[derive(Debug, Clone, Copy)]
@@ -26,9 +29,6 @@ pub struct SqEuclidean;
 
 #[derive(Debug, Clone, Copy)]
 pub struct TotalVariation;
-
-#[derive(Debug, Clone, Copy)]
-pub(crate) struct ChiSqDist;
 
 #[allow(unused)]
 #[derive(Debug, Clone, Copy)]

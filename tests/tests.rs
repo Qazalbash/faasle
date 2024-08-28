@@ -1,8 +1,8 @@
 mod common;
 use faasle_rs::distance::Distance;
 use faasle_rs::metric::{
-    BrayCurtis, Chebyshev, Cityblock, Euclidean, Hamming, KLDivergence, Minkowski, SqEuclidean,
-    TotalVariation,
+    BrayCurtis, Chebyshev, ChiSqDist, Cityblock, Euclidean, Hamming, KLDivergence, Minkowski,
+    SqEuclidean, TotalVariation,
 };
 use ndarray::{Array, Axis};
 use ndarray_rand::rand_distr::Uniform;
@@ -79,8 +79,8 @@ enumerate_tests! {
     metric: (minkowski_e, Minkowski::new(std::f64::consts::E)),
     metric: (minkowski_pi, Minkowski::new(std::f64::consts::PI)),
     metric: (total_variation, TotalVariation::new()),
-    semi_metric: (bray_curtis, BrayCurtis::new()),
-    // semi_metric: (chi_sq_dist, ChiSqDist::new()), // This test is disabled because it is numerically unstable.
-    semi_metric: (sq_euclidean, SqEuclidean::new()),
     pre_metric: (kl_divergence, KLDivergence::new()),
+    semi_metric: (bray_curtis, BrayCurtis::new()),
+    semi_metric: (chi_sq_dist, ChiSqDist::new()),
+    semi_metric: (sq_euclidean, SqEuclidean::new()),
 }
