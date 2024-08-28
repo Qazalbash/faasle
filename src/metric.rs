@@ -26,6 +26,9 @@ pub struct JSDivergence;
 pub struct KLDivergence;
 
 #[derive(Debug, Clone, Copy)]
+pub struct MeanAbsDeviation;
+
+#[derive(Debug, Clone, Copy)]
 pub struct Minkowski {
     pub p: f64,
 }
@@ -67,10 +70,6 @@ struct Jaccard;
 #[allow(unused)]
 #[derive(Debug, Clone, Copy)]
 struct Mahalanobis;
-
-#[allow(unused)]
-#[derive(Debug, Clone, Copy)]
-struct MeanAbsDeviation;
 
 #[allow(unused)]
 #[derive(Debug, Clone, Copy)]

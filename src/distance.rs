@@ -1,6 +1,6 @@
 use crate::metric::{
     BrayCurtis, Chebyshev, ChiSqDist, Cityblock, Euclidean, GenKLDivergence, Hamming, JSDivergence,
-    KLDivergence, Minkowski, SqEuclidean, TotalVariation,
+    KLDivergence, MeanAbsDeviation, Minkowski, SqEuclidean, TotalVariation,
 };
 use ndarray::{ArrayD, Axis};
 pub trait Distance<T>
@@ -110,5 +110,11 @@ impl<T: 'static + num_traits::Float + ndarray::ScalarOperand> Distance<T> for JS
         let kl_div_x_m = (x * (x.ln() - m.ln())).sum_axis(axis);
         let kl_div_y_m = (y * (y.ln() - m.ln())).sum_axis(axis);
         (kl_div_x_m + kl_div_y_m) * T::from(0.5).unwrap()
+    }
+}
+
+impl<T: 'static + num_traits::Float + num_traits::FromPrimitive> Distance<T> for MeanAbsDeviation {
+    unsafe fn distance(&self, x: &ArrayD<T>, y: &ArrayD<T>, axis: Axis) -> ArrayD<T> {
+        (x - y).abs().mean_axis(axis).unwrap()
     }
 }
