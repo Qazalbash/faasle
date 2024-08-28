@@ -1,6 +1,6 @@
 use crate::metric::{
-    BrayCurtis, Chebyshev, ChiSqDist, Cityblock, Euclidean, Hamming, KLDivergence, Minkowski,
-    SqEuclidean, TotalVariation,
+    BrayCurtis, Chebyshev, ChiSqDist, Cityblock, Euclidean, GenKLDivergence, Hamming, KLDivergence,
+    Minkowski, SqEuclidean, TotalVariation,
 };
 use ndarray::{ArrayD, Axis};
 pub trait Distance<T>
@@ -95,5 +95,11 @@ impl<T: 'static + num_traits::Float> Distance<T> for ChiSqDist {
 impl<T: 'static + num_traits::Float> Distance<T> for KLDivergence {
     unsafe fn distance(&self, x: &ArrayD<T>, y: &ArrayD<T>, axis: Axis) -> ArrayD<T> {
         (x * (x.ln() - y.ln())).sum_axis(axis)
+    }
+}
+
+impl<T: 'static + num_traits::Float + ndarray::ScalarOperand> Distance<T> for GenKLDivergence {
+    unsafe fn distance(&self, x: &ArrayD<T>, y: &ArrayD<T>, axis: Axis) -> ArrayD<T> {
+        (x * (x.ln() - y.ln() - T::one()) + y).sum_axis(axis)
     }
 }

@@ -14,6 +14,9 @@ pub struct Cityblock;
 pub struct Euclidean;
 
 #[derive(Debug, Clone, Copy)]
+pub struct GenKLDivergence;
+
+#[derive(Debug, Clone, Copy)]
 pub struct Hamming;
 
 #[derive(Debug, Clone, Copy)]
@@ -45,10 +48,6 @@ struct CorrDist;
 #[allow(unused)]
 #[derive(Debug, Clone, Copy)]
 struct CosineDist;
-
-#[allow(unused)]
-#[derive(Debug, Clone, Copy)]
-struct GenKLDivergence;
 
 #[allow(unused)]
 #[derive(Debug, Clone, Copy)]
