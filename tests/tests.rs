@@ -2,7 +2,8 @@ mod common;
 use faasle_rs::distance::Distance;
 use faasle_rs::metric::{
     BrayCurtis, Chebyshev, ChiSqDist, Cityblock, Euclidean, GenKLDivergence, Hamming, JSDivergence,
-    KLDivergence, MeanAbsDeviation, MeanSqDeviation, Minkowski, SqEuclidean, TotalVariation,
+    KLDivergence, MeanAbsDeviation, MeanSqDeviation, Minkowski, RMSDeviation, SqEuclidean,
+    TotalVariation,
 };
 use ndarray::{Array, Axis};
 use ndarray_rand::rand_distr::Uniform;
@@ -79,6 +80,7 @@ enumerate_tests! {
     metric: (minkowski_3, Minkowski::new(3.0)),
     metric: (minkowski_e, Minkowski::new(std::f64::consts::E)),
     metric: (minkowski_pi, Minkowski::new(std::f64::consts::PI)),
+    metric: (rms_deviation, RMSDeviation::new()),
     metric: (total_variation, TotalVariation::new()),
     pre_metric: (gen_kl_divergence, GenKLDivergence::new()),
     pre_metric: (kl_divergence, KLDivergence::new()),

@@ -37,6 +37,9 @@ pub struct Minkowski {
 }
 
 #[derive(Debug, Clone, Copy)]
+pub struct RMSDeviation;
+
+#[derive(Debug, Clone, Copy)]
 pub struct SqEuclidean;
 
 #[derive(Debug, Clone, Copy)]
@@ -85,10 +88,6 @@ struct PeriodicEuclidean;
 #[allow(unused)]
 #[derive(Debug, Clone, Copy)]
 struct RenyiDivergence;
-
-#[allow(unused)]
-#[derive(Debug, Clone, Copy)]
-struct RMSDeviation;
 
 #[allow(unused)]
 #[derive(Debug, Clone, Copy)]
