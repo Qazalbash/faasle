@@ -20,6 +20,9 @@ pub struct GenKLDivergence;
 pub struct Hamming;
 
 #[derive(Debug, Clone, Copy)]
+pub struct JSDivergence;
+
+#[derive(Debug, Clone, Copy)]
 pub struct KLDivergence;
 
 #[derive(Debug, Clone, Copy)]
@@ -60,10 +63,6 @@ struct HellingerDist;
 #[allow(unused)]
 #[derive(Debug, Clone, Copy)]
 struct Jaccard;
-
-#[allow(unused)]
-#[derive(Debug, Clone, Copy)]
-struct JSDivergence;
 
 #[allow(unused)]
 #[derive(Debug, Clone, Copy)]

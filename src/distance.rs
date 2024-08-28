@@ -1,6 +1,6 @@
 use crate::metric::{
-    BrayCurtis, Chebyshev, ChiSqDist, Cityblock, Euclidean, GenKLDivergence, Hamming, KLDivergence,
-    Minkowski, SqEuclidean, TotalVariation,
+    BrayCurtis, Chebyshev, ChiSqDist, Cityblock, Euclidean, GenKLDivergence, Hamming, JSDivergence,
+    KLDivergence, Minkowski, SqEuclidean, TotalVariation,
 };
 use ndarray::{ArrayD, Axis};
 pub trait Distance<T>
@@ -101,5 +101,14 @@ impl<T: 'static + num_traits::Float> Distance<T> for KLDivergence {
 impl<T: 'static + num_traits::Float + ndarray::ScalarOperand> Distance<T> for GenKLDivergence {
     unsafe fn distance(&self, x: &ArrayD<T>, y: &ArrayD<T>, axis: Axis) -> ArrayD<T> {
         (x * (x.ln() - y.ln() - T::one()) + y).sum_axis(axis)
+    }
+}
+
+impl<T: 'static + num_traits::Float + ndarray::ScalarOperand> Distance<T> for JSDivergence {
+    unsafe fn distance(&self, x: &ArrayD<T>, y: &ArrayD<T>, axis: Axis) -> ArrayD<T> {
+        let m = (x + y) * T::from(0.5).unwrap();
+        let kl_div_x_m = (x * (x.ln() - m.ln())).sum_axis(axis);
+        let kl_div_y_m = (y * (y.ln() - m.ln())).sum_axis(axis);
+        (kl_div_x_m + kl_div_y_m) * T::from(0.5).unwrap()
     }
 }
