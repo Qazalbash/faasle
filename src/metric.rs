@@ -29,6 +29,9 @@ pub struct KLDivergence;
 pub struct MeanAbsDeviation;
 
 #[derive(Debug, Clone, Copy)]
+pub struct MeanSqDeviation;
+
+#[derive(Debug, Clone, Copy)]
 pub struct Minkowski {
     pub p: f64,
 }
@@ -70,10 +73,6 @@ struct Jaccard;
 #[allow(unused)]
 #[derive(Debug, Clone, Copy)]
 struct Mahalanobis;
-
-#[allow(unused)]
-#[derive(Debug, Clone, Copy)]
-struct MeanSqDeviation;
 
 #[allow(unused)]
 #[derive(Debug, Clone, Copy)]
