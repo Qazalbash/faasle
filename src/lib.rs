@@ -1,11 +1,11 @@
-//! Faasle[^1] is a Rust package for evaluating distances (metrics) between multi
-//! dimensional arrays. It is designed to be simple, fast, and easy to use.
+//! faasle-rs[^1] is a Rust package for evaluating distances (metrics) between
+//! multidimensional arrays. It is designed to be simple, fast, and easy to use.
 //!
 //! ## How to cite?
 //!
 //! ```bibtex
-//! @software{faasle2024github,
-//!     author = {Meesum Qazalbash},
+//! @software{faaslers2024github,
+//!     author = {{M}eesum {Q}azalbash},
 //!     title = {{faasle-rs}: A Rust package for evaluating distances (metrics).},
 //!     url = {https://github.com/Qazalbash/faasle-rs},
 //!     version = {0.0.1},
@@ -23,7 +23,7 @@ mod distance;
 mod metric;
 
 /// The `Distance` trait defines the interface for evaluating distances (metrics)
-/// between multi dimensional arrays.
+/// between multidimensional arrays.
 pub use distance::Distance;
 pub use metric::BrayCurtis;
 pub use metric::Chebyshev;
