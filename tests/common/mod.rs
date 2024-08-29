@@ -68,10 +68,42 @@ macro_rules! test_triangular_inequality {
                     .iter()
                     .zip(distance_x_y.iter().zip(distance_x_z.iter()))
                     .all(|(dyz, (dxy, dxz))| (*dyz + ERR_MARGIN <= dxy + dxz) || (*dyz - ERR_MARGIN <= dxy + dxz)));
-                }
             }
-        };
-    }
+        }
+    };
+}
+
+
+#[macro_export]
+macro_rules! test_only_on_negative_values {
+    ($shape:expr, $axis:expr, $metric:expr, $name:ident) => {
+        paste::paste! {
+            #[test]
+            fn [<only_on_negative_values_$name>]() {
+                let x = Array::random($shape, Uniform::new(-1000.0, -100.0));
+                let distance = $metric.evaluate(&x, &x, $axis).unwrap();
+                let zeros = Array::zeros(distance.shape());
+                assert!(distance.abs_diff_eq(&zeros, ERR_MARGIN))
+            }
+        }
+    };
+}
+
+
+#[macro_export]
+macro_rules! test_on_negative_and_positive_values {
+    ($shape:expr, $axis:expr, $metric:expr, $name:ident) => {
+        paste::paste! {
+            #[test]
+            fn [<on_negative_and_positive_values_$name>]() {
+                let x = Array::random($shape, Uniform::new(-1000.0, 1000.0));
+                let distance = $metric.evaluate(&x, &x, $axis).unwrap();
+                let zeros = Array::zeros(distance.shape());
+                assert!(distance.abs_diff_eq(&zeros, ERR_MARGIN))
+            }
+        }
+    };
+}
 
 #[macro_export]
 macro_rules! pre_metric_test {
@@ -106,6 +138,8 @@ macro_rules! metric_test {
             )*
         }
         $(
+            test_on_negative_and_positive_values!($shape, $axis, $metric, $name);
+            test_only_on_negative_values!($shape, $axis, $metric, $name);
             test_triangular_inequality!($shape, $axis, $metric, $name);
         )*
     };
