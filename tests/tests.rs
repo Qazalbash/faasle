@@ -1,9 +1,8 @@
 mod common;
-use faasle_rs::distance::Distance;
-use faasle_rs::metric::{
-    BrayCurtis, Chebyshev, ChiSqDist, Cityblock, Euclidean, GenKLDivergence, Hamming, JSDivergence,
-    KLDivergence, MeanAbsDeviation, MeanSqDeviation, Minkowski, RMSDeviation, SqEuclidean,
-    TotalVariation,
+use faasle_rs::{
+    BrayCurtis, Chebyshev, ChiSqDist, Cityblock, Distance, Euclidean, GenKLDivergence, Hamming,
+    JSDivergence, KLDivergence, MeanAbsDeviation, MeanSqDeviation, Minkowski, RMSDeviation,
+    SqEuclidean, TotalVariation,
 };
 use ndarray::{Array, Axis};
 use ndarray_rand::rand_distr::Uniform;
