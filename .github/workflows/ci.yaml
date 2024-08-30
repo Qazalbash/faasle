@@ -5,14 +5,14 @@ on:
     branches: [ main ]
     paths:
       - "**/*.rs"
-      - ".github/workflows/ci.yml"
+      - ".github/workflows/ci.yaml"
       - "Cargo.toml"
       - "rustfmt.toml"
   pull_request:
     branches: [ main ]
     paths:
       - "**/*.rs"
-      - ".github/workflows/ci.yml"
+      - ".github/workflows/ci.yaml"
       - "Cargo.toml"
       - "rustfmt.toml"
 
