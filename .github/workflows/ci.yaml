@@ -56,4 +56,4 @@ jobs:
         uses: dtolnay/rust-toolchain@stable
 
       - name: Test default features
-        run: cargo +stable test --color=always --workspace --no-fail-fast --config env.RUSTC_BOOTSTRAP=\"1\" -- --format=json -Z unstable-options --show-output
+        run: cargo +stable test --color=always --workspace --no-fail-fast --config env.RUSTC_BOOTSTRAP=\"1\" -- -Z unstable-options --show-output
