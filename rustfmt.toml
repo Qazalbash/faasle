@@ -29,5 +29,9 @@ reorder_impl_items = true
 format_macro_matchers = true
 format_macro_bodies = true
 
+# Imports:
+group_imports = "StdExternalCrate"
+imports_granularity = "Module"
+
 # Ignored files:
 ignore = []

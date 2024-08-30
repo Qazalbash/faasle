@@ -1,9 +1,14 @@
-use crate::metric::{
-    BrayCurtis, Chebyshev, ChiSqDist, Cityblock, Euclidean, GenKLDivergence, Hamming, JSDivergence,
-    KLDivergence, MeanAbsDeviation, MeanSqDeviation, Minkowski, RMSDeviation, SqEuclidean,
-    TotalVariation,
-};
 use ndarray::{ArrayD, Axis};
+
+pub use crate::generic::metric::{
+    Chebyshev, Cityblock, Euclidean, Hamming, Minkowski, RMSDeviation, TotalVariation,
+};
+pub use crate::generic::pre_metric::{GenKLDivergence, KLDivergence};
+pub use crate::generic::semi_metric::{
+    BrayCurtis, ChiSqDist, JSDivergence, MeanAbsDeviation, MeanSqDeviation, SqEuclidean,
+};
+
+
 /// Implement this trait for a distance metric. The trait provides a method to evaluate the distance
 /// between two arrays along a specified axis.
 pub trait Distance<T>
@@ -12,10 +17,8 @@ where
 {
     /// # Safety
     ///
-    /// This function is unsafe because it performs operations on raw pointers.
-    /// The caller must ensure that the pointers are valid and that the memory they point to is
-    /// properly initialized. The caller must also ensure that the pointers are not aliased.
-    /// The function also assumes that the pointers are properly aligned.
+    /// This method is unsafe because there are no checks to ensure that the arrays have the same
+    /// shape. The caller must ensure that the arrays have the same shape.
     unsafe fn distance(&self, x: &ArrayD<T>, y: &ArrayD<T>, axis: Axis) -> ArrayD<T>;
 
     /// Evaluate the distance between two arrays. The arrays must have the same shape.
