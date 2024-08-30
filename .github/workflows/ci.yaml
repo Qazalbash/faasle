@@ -30,7 +30,7 @@ jobs:
         with:
           components: clippy
       - name: Run cargo clippy
-        run: cargo clippy --all-targets
+        run: cargo clippy --color=always --all-targets --release
 
   fmt:
     runs-on: ubuntu-latest
@@ -41,14 +41,14 @@ jobs:
         with:
           components: rustfmt
       - name: Run rustfmt --check
-        run: cargo fmt -- --check
+        run: cargo fmt -- --check --verbose
 
   test:
-    needs: [clippy, fmt]
+    needs: [ clippy, fmt ]
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-          os: [ubuntu-latest] # macos-latest, windows-latest
+        os: [ ubuntu-latest ] # macos-latest, windows-latest
 
     steps:
       - uses: actions/checkout@v4
@@ -56,4 +56,4 @@ jobs:
         uses: dtolnay/rust-toolchain@stable
 
       - name: Test default features
-        run: cargo test --all-targets
+        run: cargo +stable test --color=always --workspace --no-fail-fast --config env.RUSTC_BOOTSTRAP=\"1\" -- --format=json -Z unstable-options --show-output
