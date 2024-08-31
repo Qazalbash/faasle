@@ -1,5 +1,5 @@
 #![doc = include_str!("../README.md")]
-#![doc(issue_tracker_base_url = "https://github.com/Qazalbash/faasle-rs/issues/")]
+#![doc(issue_tracker_base_url = "https://github.com/Qazalbash/faasle/issues/")]
 mod distance;
 mod generic;
 

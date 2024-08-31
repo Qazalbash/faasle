@@ -1,5 +1,5 @@
 mod common;
-use faasle_rs::{
+use faasle::{
     BrayCurtis, Chebyshev, ChiSqDist, Cityblock, Distance, Euclidean, GenKLDivergence, Hamming,
     JSDivergence, KLDivergence, MeanAbsDeviation, MeanSqDeviation, Minkowski, RMSDeviation,
     SqEuclidean, TotalVariation,

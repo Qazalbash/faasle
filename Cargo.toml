@@ -1,5 +1,5 @@
 [package]
-name = "faasle-rs"
+name = "faasle"
 version = "0.1.0"
 edition = "2021"
 crate-type = ["lib"]
@@ -7,7 +7,8 @@ authors = ["Meesum Qazalbash <meesumqazalbash@gmail.com>"]
 rust-version = "1.80.1"
 description = "A Rust crate for evaluating distances (metrics)"
 readme = "README.md"
-repository = "https://github.com/Qazalbash/faasle-rs"
+homepage = "https://github.com/Qazalbash/faasle"
+repository = "https://github.com/Qazalbash/faasle"
 license = "MIT"
 keywords = [
     "metrics",
@@ -16,7 +17,12 @@ keywords = [
     "mathematics",
     "geometry",
 ]
-categories = ["mathematics"]
+categories = ["mathematics", "no-std", "science"]
+include = ["src"]
+
+[lib]
+name = "faasle"
+path = "src/lib.rs"
 
 
 [dependencies]
@@ -27,3 +33,9 @@ num-traits = "0.2.19"
 ndarray = { version = "0.16.1", features = ["approx"] }
 ndarray-rand = "0.15.0"
 paste = "1.0.15"
+
+[package.metadata.docs.rs]
+# Enable all the features when building the docs on docs.rs
+all-features = true
+# define the configuration attribute `docsrs`
+rustdoc-args = ["--cfg", "docsrs"]

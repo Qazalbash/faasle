@@ -1,12 +1,11 @@
-# faasle-rs
+# `faasle`
 
-faasle-rs[^1] is a Rust package for evaluating distances (metrics) between
-multidimensional arrays. It is designed to be simple, fast, and easy to use.
+`faasle`[^1] is a Rust package for evaluating distances (metrics) between multidimensional arrays. It is designed to be simple, fast, and easy to use.
 
 ## Usage
 
 ```rust
-use faasle_rs::{Distance, Euclidean};
+use faasle::{Distance, Euclidean};
 use ndarray::{ArrayD, Axis};
 
 let x =
@@ -21,13 +20,38 @@ assert!(distance.abs_diff_eq(
 ));
 ```
 
+## Hierarchy of Types
+
+Mathematically a distance metric is a function $d:\mathcal{X}\times\mathcal{X}\rightarrow\mathbb{R}$, where $\mathcal{X}$ is a set, such that they satisfy the following properties:
+
+### Positivity
+
+1. $d(x, y) \geq 0$ for all $x, y \in \mathcal{X}$,
+2. $d(x, y) = 0$ if and only if $x = y$,
+
+### Symmetry
+
+3. $d(x, y) = d(y, x)$ for all $x, y \in \mathcal{X}$,
+
+### Triangle Inequality
+
+4. $d(x, z) \leq d(x, y) + d(y, z)$ for all $x, y, z \in \mathcal{X}$.
+
+The hierarchy of types and their properties are as follows:
+
+|                     | `PreMetric` | `SemiMetric` | `Metric` |
+|---------------------|-------------|--------------|----------|
+| Positivity          |      ✅     |      ✅      |    ✅    |
+| Symmetry            |      ❌     |      ✅      |    ✅    |
+| Triangle Inequality |      ❌     |      ❌      |    ✅    |
+
 ## How to cite?
 
 ```bibtex
 @software{faaslers2024github,
     author = {{M}eesum {Q}azalbash},
-    title = {{faasle-rs}: A Rust package for evaluating distances (metrics).},
-    url = {https://github.com/Qazalbash/faasle-rs},
+    title = {{faasle}: Rust crate for evaluating distances (metrics).},
+    url = {https://github.com/Qazalbash/faasle},
     version = {0.0.1},
     year = {2024}
 }

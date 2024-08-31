@@ -43,8 +43,16 @@ jobs:
       - name: Run rustfmt --check
         run: cargo fmt -- --check --verbose
 
-  test:
+  docs:
     needs: [ clippy, fmt ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Generate documentation
+        run: cargo doc --no-deps --all-features --workspace --release
+
+  test:
+    needs: [ docs ]
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
