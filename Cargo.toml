@@ -2,6 +2,22 @@
 name = "faasle-rs"
 version = "0.1.0"
 edition = "2021"
+crate-type = ["lib"]
+authors = ["Meesum Qazalbash <meesumqazalbash@gmail.com>"]
+rust-version = "1.80.1"
+description = "A Rust crate for evaluating distances (metrics)"
+readme = "README.md"
+repository = "https://github.com/Qazalbash/faasle-rs"
+license = "MIT"
+keywords = [
+    "metrics",
+    "distance",
+    "multidimensional",
+    "mathematics",
+    "geometry",
+]
+categories = ["mathematics"]
+
 
 [dependencies]
 ndarray = "0.16.1"
