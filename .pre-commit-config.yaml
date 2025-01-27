@@ -1,7 +1,7 @@
 files: src||tests
 repos:
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.41.0
+    rev: v0.44.0
     hooks:
       - id: markdownlint
         # MD013: line length
@@ -9,18 +9,11 @@ repos:
         # MD041: first line in a file should be a top-level heading
         args: [--disable, MD013, MD033, MD041, "--"]
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.3.0
+    rev: v2.4.0
     hooks:
       - id: codespell
-        stages: [commit, commit-msg]
-        args:
-          [
-            --ignore-words-list,
-            precessing,
-            --ignore-words-list,
-            multline,
-            --check-filenames,
-          ]
+        stages: [pre-commit, commit-msg]
+        args: [--ignore-words-list, precessing, --ignore-words-list, multline, --check-filenames]
   - repo: local
     hooks:
       - id: no-bracket-links
@@ -44,6 +37,11 @@ repos:
         exclude: LICENSE
         exclude_types: [python, bib, gitignore, jupyter, makefile, rst, yaml]
   - repo: https://github.com/gitleaks/gitleaks
-    rev: v8.18.4
+    rev: v8.23.2
     hooks:
       - id: gitleaks
+  - repo: https://github.com/google/yamlfmt
+    rev: v0.15.0
+    hooks:
+      - id: yamlfmt
+        args: [-formatter, retain_line_breaks=true]
