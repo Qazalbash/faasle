@@ -73,7 +73,6 @@ macro_rules! test_triangular_inequality {
     };
 }
 
-
 #[macro_export]
 macro_rules! test_only_on_negative_values {
     ($shape:expr, $axis:expr, $metric:expr, $name:ident) => {
@@ -88,7 +87,6 @@ macro_rules! test_only_on_negative_values {
         }
     };
 }
-
 
 #[macro_export]
 macro_rules! test_on_negative_and_positive_values {

@@ -1,8 +1,8 @@
 mod common;
 use faasle::{
-    BrayCurtis, Chebyshev, ChiSqDist, Cityblock, Distance, Euclidean, GenKLDivergence, Hamming,
-    JSDivergence, KLDivergence, MeanAbsDeviation, MeanSqDeviation, Minkowski, RMSDeviation,
-    SqEuclidean, TotalVariation,
+    BhattacharyyaDist, BrayCurtis, Chebyshev, ChiSqDist, Cityblock, Distance, Euclidean,
+    GenKLDivergence, Hamming, JSDivergence, KLDivergence, MeanAbsDeviation, MeanSqDeviation,
+    Minkowski, RMSDeviation, SqEuclidean, TotalVariation,
 };
 use ndarray::{Array, Axis};
 use ndarray_rand::rand_distr::Uniform;
@@ -88,4 +88,5 @@ enumerate_tests! {
     semi_metric: (js_divergence, JSDivergence::new()),
     semi_metric: (mean_sq_deviation, MeanSqDeviation::new()),
     semi_metric: (sq_euclidean, SqEuclidean::new()),
+    semi_metric: (bhattacharyya_dist, BhattacharyyaDist::new()),
 }

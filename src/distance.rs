@@ -5,9 +5,9 @@ pub use crate::generic::metric::{
 };
 pub use crate::generic::pre_metric::{GenKLDivergence, KLDivergence};
 pub use crate::generic::semi_metric::{
-    BrayCurtis, ChiSqDist, JSDivergence, MeanAbsDeviation, MeanSqDeviation, SqEuclidean,
+    BhattacharyyaDist, BrayCurtis, ChiSqDist, JSDivergence, MeanAbsDeviation, MeanSqDeviation,
+    SqEuclidean,
 };
-
 
 /// Implement this trait for a distance metric. The trait provides a method to evaluate the distance
 /// between two arrays along a specified axis.
@@ -157,5 +157,17 @@ impl<T: 'static + num_traits::Float + num_traits::FromPrimitive> Distance<T> for
 impl<T: 'static + num_traits::Float + num_traits::FromPrimitive> Distance<T> for RMSDeviation {
     unsafe fn distance(&self, x: &ArrayD<T>, y: &ArrayD<T>, axis: Axis) -> ArrayD<T> {
         (x - y).pow2().mean_axis(axis).unwrap().sqrt()
+    }
+}
+
+#[doc(hidden)]
+impl<T: 'static + num_traits::Float + num_traits::FromPrimitive + ndarray::ScalarOperand>
+    Distance<T> for BhattacharyyaDist
+{
+    unsafe fn distance(&self, x: &ArrayD<T>, y: &ArrayD<T>, axis: Axis) -> ArrayD<T> {
+        let ln_sqrt_sum_x_y = (x * y).sqrt().sum_axis(axis).ln();
+        let sqrt_sum_x = x.sum_axis(axis).ln() * T::from(0.5).unwrap();
+        let sqrt_sum_y = y.sum_axis(axis).ln() * T::from(0.5).unwrap();
+        sqrt_sum_x + sqrt_sum_y - ln_sqrt_sum_x_y
     }
 }

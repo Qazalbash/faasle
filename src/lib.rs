@@ -34,6 +34,9 @@ pub use generic::pre_metric::GenKLDivergence;
 /// `KLDivergence(x, y) = sum(x .* ln(x ./ y))`
 #[doc(inline)]
 pub use generic::pre_metric::KLDivergence;
+/// `BhattacharyyaDist(x, y) = -ln(sum(sqrt(x .* y)))+0.5*ln(sum(x))+0.5*ln(sum(y))`
+#[doc(inline)]
+pub use generic::semi_metric::BhattacharyyaDist;
 /// `BrayCurtis(x, y) = sum(|x - y|) / sum(|x + y|)`
 #[doc(inline)]
 pub use generic::semi_metric::BrayCurtis;

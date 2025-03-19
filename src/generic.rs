@@ -19,23 +19,23 @@ macro_rules! impl_metric {
     };
 }
 
-
 pub mod pre_metric {
     impl_metric! {
-        KLDivergence,
         GenKLDivergence,
+        KLDivergence,
         NormRMSDeviation,
     }
 }
 pub mod semi_metric {
     impl_metric! {
-        SqEuclidean,
+        BhattacharyyaDist,
         BrayCurtis,
         ChiSqDist,
         JSDivergence,
-        SpanNormDist,
         MeanAbsDeviation,
         MeanSqDeviation,
+        SpanNormDist,
+        SqEuclidean,
     }
 }
 pub mod metric {
