@@ -9,7 +9,7 @@ repos:
         # MD041: first line in a file should be a top-level heading
         args: [--disable, MD013, MD033, MD041, "--"]
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.4.0
+    rev: v2.4.1
     hooks:
       - id: codespell
         stages: [pre-commit, commit-msg]
@@ -37,11 +37,11 @@ repos:
         exclude: LICENSE
         exclude_types: [python, bib, gitignore, jupyter, makefile, rst, yaml]
   - repo: https://github.com/gitleaks/gitleaks
-    rev: v8.23.2
+    rev: v8.24.0
     hooks:
       - id: gitleaks
   - repo: https://github.com/google/yamlfmt
-    rev: v0.15.0
+    rev: v0.16.0
     hooks:
       - id: yamlfmt
         args: [-formatter, retain_line_breaks=true]
