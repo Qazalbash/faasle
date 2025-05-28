@@ -1,3 +1,9 @@
+<div align="center">
+<a href="https://gwkokab.readthedocs.io">
+<img src="https://raw.githubusercontent.com/Qazalbash/faasle/main/logos/noBgColor.png" alt="logo"></img>
+</a>
+</div>
+
 # `faasle`
 
 `faasle`[^1] is a Rust package for evaluating distances (metrics) between multidimensional arrays. It is designed to be simple, fast, and easy to use.
