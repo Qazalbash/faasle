@@ -1,5 +1,5 @@
 <div align="center">
-<a href="https://gwkokab.readthedocs.io">
+<a href="https://docs.rs/faasle/latest">
 <img src="https://raw.githubusercontent.com/Qazalbash/faasle/main/logos/noBgColor.png" alt="logo"></img>
 </a>
 </div>
