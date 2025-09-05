@@ -28,7 +28,7 @@ assert!(distance.abs_diff_eq(
 
 ## Hierarchy of Types
 
-Mathematically a distance metric is a function $d:\mathcal{X}\times\mathcal{X}\rightarrow\mathbb{R}$, where $\mathcal{X}$ is a set, such that they satisfy the following properties:
+Mathematically, a distance metric is a function $d:\mathcal{X}\times\mathcal{X}\rightarrow\mathbb{R}$, where $\mathcal{X}$ is a set, such that they satisfy the following properties:
 
 ### Positivity
 
@@ -54,7 +54,7 @@ The hierarchy of types and their properties are as follows:
 ## How to cite?
 
 ```bibtex
-@software{faaslers2024github,
+@software{faasle2024github,
     author = {{M}eesum {Q}azalbash},
     title = {{faasle}: Rust crate for evaluating distances (metrics).},
     url = {https://github.com/Qazalbash/faasle},
