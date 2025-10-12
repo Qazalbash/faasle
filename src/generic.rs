@@ -23,7 +23,6 @@ pub mod pre_metric {
     impl_metric! {
         GenKLDivergence,
         KLDivergence,
-        NormRMSDeviation,
     }
 }
 pub mod semi_metric {
@@ -34,7 +33,6 @@ pub mod semi_metric {
         JSDivergence,
         MeanAbsDeviation,
         MeanSqDeviation,
-        SpanNormDist,
         SqEuclidean,
     }
 }
@@ -42,10 +40,8 @@ pub mod metric {
     impl_metric! {
         Chebyshev,
         Cityblock,
-        CosineDist,
         Euclidean,
         Hamming,
-        Jaccard,
         RMSDeviation,
         TotalVariation,
     }
