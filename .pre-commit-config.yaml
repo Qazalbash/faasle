@@ -37,11 +37,11 @@ repos:
         exclude: LICENSE
         exclude_types: [python, bib, gitignore, jupyter, makefile, rst, yaml]
   - repo: https://github.com/gitleaks/gitleaks
-    rev: v8.26.0
+    rev: v8.28.0
     hooks:
       - id: gitleaks
   - repo: https://github.com/google/yamlfmt
-    rev: v0.17.0
+    rev: v0.17.2
     hooks:
       - id: yamlfmt
         args: [-formatter, retain_line_breaks=true]
