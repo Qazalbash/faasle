@@ -26,11 +26,11 @@ path = "src/lib.rs"
 
 
 [dependencies]
-ndarray = "0.16.1"
+ndarray = "0.17.2"
 num-traits = "0.2.19"
 
 [dev-dependencies]
-ndarray = { version = "0.16.1", features = ["approx"] }
+ndarray = { version = "0.17.2", features = ["approx"] }
 ndarray-rand = "0.15.0"
 paste = "1.0.15"
 
